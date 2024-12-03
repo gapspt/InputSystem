@@ -343,6 +343,8 @@ namespace UnityEngine.InputSystem.UI
 
             ////REVIEW: for touch, we only need the left button; should we skip right and middle button processing? then we also don't need to copy to/from the event
 
+            var pointerId = eventData.pointerId;
+
             // Left mouse button. Movement and scrolling is processed with event set left button.
             eventData.button = PointerEventData.InputButton.Left;
             state.leftButton.CopyPressStateTo(eventData);
@@ -358,7 +360,11 @@ namespace UnityEngine.InputSystem.UI
             // However, after that, early out at this point when there's no changes to the pointer state (except
             // for tracked pointers as the tracking origin may have moved).
             if (!state.changedThisFrame && (xrTrackingOrigin == null || state.pointerType != UIPointerType.Tracked))
+            {
+                // Restore the original pointerId
+                eventData.pointerId = pointerId;
                 return;
+            }
 
             ProcessPointerButton(ref state.leftButton, eventData);
             ProcessPointerButtonDrag(ref state.leftButton, eventData);
@@ -379,6 +385,9 @@ namespace UnityEngine.InputSystem.UI
 
             ProcessPointerButton(ref state.middleButton, eventData);
             ProcessPointerButtonDrag(ref state.middleButton, eventData);
+
+            // Restore the original pointerId
+            eventData.pointerId = pointerId;
         }
 
         // if we are using a MultiplayerEventSystem, ignore any transforms
