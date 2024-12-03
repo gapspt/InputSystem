@@ -346,6 +346,7 @@ namespace UnityEngine.InputSystem.UI
             // Left mouse button. Movement and scrolling is processed with event set left button.
             eventData.button = PointerEventData.InputButton.Left;
             state.leftButton.CopyPressStateTo(eventData);
+            eventData.pointerId = PointerInputModule.kMouseLeftId;
 
             // Unlike StandaloneInputModule, we process moves before processing buttons. This way
             // UI elements get pointer enters/exits before they get button ups/downs and clicks.
@@ -366,6 +367,7 @@ namespace UnityEngine.InputSystem.UI
             // Right mouse button.
             eventData.button = PointerEventData.InputButton.Right;
             state.rightButton.CopyPressStateTo(eventData);
+            eventData.pointerId = PointerInputModule.kMouseRightId;
 
             ProcessPointerButton(ref state.rightButton, eventData);
             ProcessPointerButtonDrag(ref state.rightButton, eventData);
@@ -373,6 +375,7 @@ namespace UnityEngine.InputSystem.UI
             // Middle mouse button.
             eventData.button = PointerEventData.InputButton.Middle;
             state.middleButton.CopyPressStateTo(eventData);
+            eventData.pointerId = PointerInputModule.kMouseMiddleId;
 
             ProcessPointerButton(ref state.middleButton, eventData);
             ProcessPointerButtonDrag(ref state.middleButton, eventData);
